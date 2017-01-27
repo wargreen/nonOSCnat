@@ -88,18 +88,18 @@ class NsmClientWorker(QObject):
 
 
 ### QT main
-class Main(QtWidgets.QWidget):
+class Main(QtWidgets.QMainWindow):
     def __init__(self, qtApp):
         super().__init__()
         
         appTitle = "Non-OSC-NAT"
         
-        self.window = QtWidgets.QMainWindow(self)
+        #self.window = QtWidgets.QMainWindow(self)
         
         self.qtApp = qtApp
         self.setGeometry(300,300,350,250)
         # Define all GUI elements
-        self.wraper = QtWidgets.QVBoxLayout()
+        self.mainLayout = QtWidgets.QVBoxLayout()
         self.wraperBox = QtWidgets.QGroupBox()
         self.peerSelect = QtWidgets.QVBoxLayout()
         self.peersList = QtWidgets.QHBoxLayout()
@@ -114,12 +114,17 @@ class Main(QtWidgets.QWidget):
         self.listSelPeer = QtWidgets.QListWidget()
         #self.spacer = QtWidgets.QSpacerItem()
         
-        self.status = QtWidgets.QMainWindow.statusBar(self.window)
+        self.status = QtWidgets.QMainWindow.statusBar(self)
         self.status.showMessage('Init...')
         
+        # Define QT's main widget
+        self.mainWidget = QtWidgets.QWidget(self)
+        self.mainWidget.setLayout(self.mainLayout)
+        self.setCentralWidget(self.mainWidget)
+        
         # Define elements places
-        self.setLayout(self.wraper)
-        self.wraper.addWidget(self.wraperBox)
+        #self.setLayout(self.wraper)
+        self.mainLayout.addWidget(self.wraperBox)
         self.wraperBox.setLayout(self.peersList)
         self.peersList.addLayout(self.peerSelect)
         self.peersList.addStretch(50)
@@ -131,6 +136,8 @@ class Main(QtWidgets.QWidget):
         # Define widgets in peerPortForm
         self.peerPortForm.addWidget(self.peerPort)
         self.peerPortForm.addWidget(self.peerPortApply)
+        
+      
         
         # Try to thead
         """
