@@ -94,10 +94,11 @@ class Main(QtWidgets.QWidget):
         
         appTitle = "Non-OSC-NAT"
         
+        self.window = QtWidgets.QMainWindow(self)
         
         self.qtApp = qtApp
         self.setGeometry(300,300,350,250)
-        # Define all elements
+        # Define all GUI elements
         self.wraper = QtWidgets.QVBoxLayout()
         self.wraperBox = QtWidgets.QGroupBox()
         self.peerSelect = QtWidgets.QVBoxLayout()
@@ -106,11 +107,15 @@ class Main(QtWidgets.QWidget):
         self.peerPort = QtWidgets.QSpinBox()
         self.peerPort.setMinimum(1025)
         self.peerPort.setMaximum(65000)
+        self.peerPort.setValue(16000)
         self.peerPortApply = QtWidgets.QPushButton("Apply")
         self.peerPortForm = QtWidgets.QVBoxLayout()
         self.listHead = QtWidgets.QLabel("NON Clients :")
         self.listSelPeer = QtWidgets.QListWidget()
         #self.spacer = QtWidgets.QSpacerItem()
+        
+        self.status = QtWidgets.QMainWindow.statusBar(self.window)
+        self.status.showMessage('Init...')
         
         # Define elements places
         self.setLayout(self.wraper)
@@ -147,10 +152,14 @@ class Main(QtWidgets.QWidget):
     def nsmClientRdy(self, loops):
         #self.title.setText("<b>" + str(loops) + "</b>")
         pass
+    
     def nsmClientGet(self, ourNsmClient):
         self.ourNsmClient = ourNsmClient
         self.testGui()
-        
+    
+    def applyPort(self):
+        pass
+    
     
     def quit(self):
         self.title.setText("Quitte")
