@@ -1,1 +1,0 @@
-/home/wargreen/Documents/Code/pynsmclient/nsmclient.py
