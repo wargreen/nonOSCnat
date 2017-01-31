@@ -11,7 +11,8 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import qDebug, QObject, QThread
 import logging
 
-import nsmclient
+from imports import nsmclient
+from imports.pyNonPeer import OurNonClient
 
 
 #QT thead worker
@@ -112,6 +113,7 @@ class Main(QtWidgets.QMainWindow):
         self.peerPortForm = QtWidgets.QVBoxLayout()
         self.listHead = QtWidgets.QLabel("NON Clients :")
         self.listSelPeer = QtWidgets.QListWidget()
+        #self.infoAppId = QtWidgets.QLabel
         #self.spacer = QtWidgets.QSpacerItem()
         
         self.status = QtWidgets.QMainWindow.statusBar(self)
@@ -140,7 +142,7 @@ class Main(QtWidgets.QMainWindow):
       
         
         # Try to thead
-        """
+        
         self.threads = []
         nsmClientWorker = NsmClientWorker(appTitle)
         
@@ -150,7 +152,7 @@ class Main(QtWidgets.QMainWindow):
         self.threads.append(nsmClientWorker)
         #nsmClientWorker.start()
         qDebug("Worker in place, running...")
-        """
+        
         self.eventLoop = QtCore.QTimer()
         self.eventLoop.start(100) #10ms-20ms is smooth for "real time" feeling. 100ms is still ok.
 
@@ -173,7 +175,8 @@ class Main(QtWidgets.QMainWindow):
         exit()
 
     def testGui(self):
-        self.title.setText(str(self.ourNsmClient.states.prettyNSMName))
+        self.status.addPermanentWidget(QtWidgets.QLabel(self.ourNsmClient.states.clientId))
+        #self.title.setText(str(self.ourNsmClient.states.prettyNSMName))
 
 
 if __name__ == '__main__':
