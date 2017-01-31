@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-nonPeers = {}
+version = 0.1
 
 class NonPeer(object):
     """
@@ -29,11 +29,15 @@ class OurNonClient(object):
                "/signal/list" : ("", None), # Ask for possible controls. (reply form = path : /reply. "/signal/list", Ident/path, [in|out], min, max, default)
                #"/reply" : ("", None), # TODO
                }
-               
+    # Dict of all peers as Id : nonPeerObj
+    nonPeers = {}               
     
     def __init__(self, nsmClient):
         nsmClient = nsmClient
+        self.nsmStates = nsmClient.states
+        
         nsmClient.methodAdder(self.methods)
+        self.nonPeers[self.nsmStates.ourUrl] = NonPeer(self.nsmStates.ourUrl, version, self.nsmStates.clientId)
         
     
     def sayHello(self):
