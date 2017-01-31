@@ -9,19 +9,22 @@ class CallbackDict(dict):
                  get_callback=None,
                  del_callback=None,
                  **kwargs):
-        self.set_callback = set_callback if set_callback else lambda: pass
-        self.get_callback = get_callback if get_callback else lambda: pass
-        self.del_callback = del_callback if del_callback else lambda: pass
+        self.set_callback = set_callback
+        self.get_callback = get_callback
+        self.del_callback =s del_callback
         super().__init__(self, *args, **kwargs)
 
     def __getitem__(self, key):
-        self.get_callback()
+        if self.get_callback:
+            self.get_callback()
         return dict.__getitem__(self, key)
 
     def __setitem__(self, key, val):
         dict.__setitem__(self, key, val)
-        self.set_callback()
+        if self.set_callback:
+            self.set_callback()
 
     def __delitem__(self, key):
         dict.__setitem__(self, key)
-        self.del_callback()
+        if self.del_callback:
+            self.del_callback()
