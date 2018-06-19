@@ -11,7 +11,7 @@ class CallbackDict(dict):
                  **kwargs):
         self.set_callback = set_callback
         self.get_callback = get_callback
-        self.del_callback =s del_callback
+        self.del_callback = del_callback
         super().__init__(self, *args, **kwargs)
 
     def __getitem__(self, key):

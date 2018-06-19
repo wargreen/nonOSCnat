@@ -111,7 +111,7 @@ class NsmClientWorker(QObject):
         qDebug("Got a OpenOrNewCallback")
         self.openSessSign.emit(pathBeginning, clientId)
         self.ourNonPeer.loadSession()
-        return True, "Not realy implemented"
+        return True, " Not realy implemented"
 
     def exitCallback(self):
         qDebug("Got a ExitCallback")

@@ -133,13 +133,13 @@ class OurNonClient(object):
 
         
         # Methods to pass to liblo server.
-        # Form : "/osc/path" : (Callback, Reply Callback)    
+        # Form : "/osc/path" : (Reply Callback, Callback)
         # OSC::Signal messages from https://github.com/original-male/non/blob/master/nonlib/OSC/Endpoint.C#L216
         # All will be implemented... One Day...
 
         # Without args types, better intergration with nsmclient.py
-        methods = {"/non/hello" : (self.handleHello, None), # Broadcasted Hello message. (osc_url, app_title, version, instance_name)
-                   "/signal/hello" : (self.handleHello, None), # Unicast Hello response from app. (Ident, url)
+        methods = {"/non/hello" : (None, self.handleHello), # Broadcasted Hello message. (osc_url, app_title, version, instance_name)
+                   "/signal/hello" : (None, self.handleHello), # Unicast Hello response from app. (Ident, url)
                    "/signal/connect" : (None, None), # Inform about a new control link. (source Ident/path, dest Ident/path)
                    "/signal/disconnect" : (None, None), # Inform about a removed control link. (source Ident/path, dest Ident/path)
                    "/signal/renamed" : (None, None), # TODO
@@ -148,20 +148,6 @@ class OurNonClient(object):
                    "/signal/list" : (None, None), # Ask for possible controls. (reply form = path : /reply. "/signal/list", Ident/path, [in|out], min, max, default)
                    #"/reply" : ("", None), # TODO
                    }
-
-        
-    #    # With or without types ??? This is the question...
-    #    
-    #    methods = {"/non/hello" : ("sssss", None), # Broadcasted Hello message. ("/non/hello", osc_url, app_title, version, instance_name)
-    #               "/signal/hello" : ("ss", None), # Unicast Hello response from app. (Ident, url)
-    #               "/signal/connect" : ("ss", None), # Inform about a new control link. (source Ident/path, dest Ident/path)
-    #               "/signal/disconnect" : ("ss", None), # Inform about a removed control link. (source Ident/path, dest Ident/path)
-    #               "/signal/renamed" : ("ss", None), # TODO
-    #               "/signal/removed" : ("s", None), # TODO
-    #               "/signal/created" : ("ssfff", None), # Inform about a new controlable. (Ident/path, [in|out], min, max, default)
-    #               "/signal/list" : ("", None), # Ask for possible controls. (reply form = path : /reply. "/signal/list", Ident/path, [in|out], min, max, default)
-    #               #"/reply" : ("", None), # TODO
-    #               }
         
         # redefines globals non callbacks
         global nonCallbacks
@@ -227,9 +213,3 @@ class OurNonClient(object):
         for peerId, peerObj in self.nonPeers.items():
             peerObj.procOsc()
 
-        
-        
-        
-        
-        
-        
